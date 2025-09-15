@@ -41,7 +41,7 @@ const routes = createBrowserRouter([
       children: [
         { path: "login", element: <Login /> },
         { path: "register", element: <Register /> },
-        { path: "forget-password", element: <ForgotPassword /> },
+        { path: "forgot-password", element: <ForgotPassword /> },
         { path: "reset-password", element: <ResetPassword /> },
         { path: "change-password", element: <ChangePassword />},
       ],

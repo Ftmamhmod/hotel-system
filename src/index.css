@@ -1,0 +1,42 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.auth-bg {
+  height: 100%;
+  border-radius: 10px;
+  background-size: 100% 100%;
+  position: relative;
+  padding: 10% !important;
+}
+
+.auth-bg h2 {
+  position: absolute;
+  top: 80%;
+  font-size: 40px;
+  color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.auth-bg h2::after {
+  position: absolute;
+  content: "Homes as unique as you.";
+  left: 0;
+  top: 100%;
+  font-size: 0.6em;
+  font-weight: lighter;
+}
+
+.login-bg, .change-bg {
+  background-image: url(/src/Images/loginBG.jpg);
+}
+
+.register-bg {
+  background-image: url(/src/Images/RegisterBG.jpg);
+}
+
+.forgot-bg, .reset-bg {
+  background-image: url(/src/Images/forgotBG.jpg);
+}
