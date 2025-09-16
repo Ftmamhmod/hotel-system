@@ -13,3 +13,15 @@ export const PASSWORD_VALIDATION = {
         message: 'The password must include at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 6 characters long'
     }
 }
+
+export const REQUIRED_VALIDATION = (field_name: string) => ({
+    required: `${field_name} is required!` 
+})
+
+export const PHONE_VALIDATION = {
+    required: 'Phone Number is required!',
+    pattern: {
+        value: /^\+?[0-9\s\-]{9,15}$/,
+        message: "Invalid phone number!!"
+    }
+}
