@@ -61,7 +61,7 @@ export default function ChangePassword() {
           <Typography>
             You can {""}
             <Link
-              href="/register"
+              href="/login"
               underline="none"
               sx={{ color: "#EB5148", fontWeight: "bold" }}
             >
