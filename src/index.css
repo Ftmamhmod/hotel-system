@@ -40,3 +40,8 @@
 .forgot-bg, .reset-bg {
   background-image: url(/src/Images/forgotBG.jpg);
 }
+
+.loading-icon{
+    width: 4%;
+    margin-left: 20px;
+}

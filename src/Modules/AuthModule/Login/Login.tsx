@@ -1,8 +1,177 @@
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import FilledInput from "@mui/material/FilledInput";
+import FormControl from "@mui/material/FormControl";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Link from "@mui/material/Link";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Typography from "@mui/material/Typography";
+import { useState } from "react";
+import Button from "@mui/material/Button";
+import { useForm } from "react-hook-form";
+import type { loginDataTypes } from "../../../Services/INTERFACES";
+import {
+  EMAIL_VALIDATION,
+  PASSWORD_VALIDATION,
+} from "../../../Services/VALIDATIONS";
+import { axiosInstance, USERS_URLS } from "../../../Services/END_POINTS";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import type { AxiosError } from "axios";
+import loading from "../../../Images/loading.gif";
 
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<loginDataTypes>();
+
+  const onSubmit = async (data: loginDataTypes) => {
+    try {
+      const response = await axiosInstance.post(USERS_URLS.LOGIN, data);
+      console.log(response);
+      localStorage.setItem("token", response.data.token);
+      // getLoginData();
+      toast.success(`Welcome to PMS!`);
+      navigate("/dashboard");
+    } catch (err) {
+      const error = err as AxiosError<{ message: string }>;
+      toast.error(error.response?.data?.message || "Something went wrong");
+    }
+  };
+
   return (
-    <div>
-      login 
-    </div>
-  )
+    <Container>
+      <Box>
+        <Typography variant="h4" component="h1" sx={{ fontWeight: "600" }}>
+          Sign in
+        </Typography>
+        <Typography variant="body1" component="p" sx={{ marginY: "30px" }}>
+          If you don't have an account register{" "}
+          <Typography>
+            You can{" "}
+            <Link
+              href="/register"
+              underline="none"
+              sx={{ color: "#152C5B", fontWeight: "bold" }}
+            >
+              Register here !
+            </Link>
+          </Typography>
+        </Typography>
+      </Box>
+      <Box onSubmit={handleSubmit(onSubmit)} component="form">
+        <FormControl fullWidth>
+          {/* <InputLabel htmlFor="email">Email address</InputLabel> */}
+          <Typography color="#152C5B">Email Address</Typography>
+          <FilledInput
+            {...register("email", EMAIL_VALIDATION)}
+            id="email"
+            placeholder="Please type here..."
+            disableUnderline
+            sx={{
+              bgcolor: "#F5F6F8",
+              borderRadius: "4px",
+              marginTop: "10px",
+              "& .MuiInputBase-input": {
+                py: "10px",
+                "::placeholder": {
+                  color: "#b4b4b4ff",
+                },
+              },
+            }}
+          />
+          {errors.email && (
+            <Typography sx={{ color: "red" }}>
+              {errors.email.message as string}
+            </Typography>
+          )}
+        </FormControl>
+        <FormControl fullWidth>
+          {/* <InputLabel htmlFor="email">Email address</InputLabel> */}
+          <Typography color="#152C5B" sx={{ marginTop: "50px" }}>
+            Password
+          </Typography>
+          <FilledInput
+            {...register("password", PASSWORD_VALIDATION)}
+            type={showPassword ? "text" : "password"}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label={
+                    showPassword ? "hide the password" : "display the password"
+                  }
+                  onClick={() => setShowPassword(!showPassword)}
+                  onMouseDown={(e) => e.preventDefault()}
+                  onMouseUp={(e) => e.preventDefault()}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            id="password"
+            placeholder="Please type here..."
+            disableUnderline
+            sx={{
+              bgcolor: "#F5F6F8",
+              borderRadius: "4px",
+              marginTop: "10px",
+              "& .MuiInputBase-input": {
+                py: "10px",
+                "::placeholder": {
+                  color: "#b4b4b4ff",
+                },
+              },
+            }}
+          />
+          {errors.password && (
+            <Typography variant="body1" sx={{ color: "red" }}>
+              {errors.password.message as string}
+            </Typography>
+          )}
+          <Link
+            href="/forgot-password"
+            underline="none"
+            sx={{
+              color: "#4D4D4D",
+              fontFamily: "sans-serif",
+              marginTop: "15px",
+              fontSize: "13px",
+              textAlign: "end",
+            }}
+          >
+            Forgot Password?
+          </Link>
+        </FormControl>
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          variant="contained"
+          fullWidth
+          sx={{
+            bgcolor: "#3252DF",
+            marginTop: "100px",
+            padding: "15px",
+            textTransform: "capitalize",
+            fontSize: "17px",
+          }}
+        >
+          Login{" "}
+          <img
+            hidden={!isSubmitting}
+            src={loading}
+            alt="loading"
+            className="loading-icon"
+          />
+        </Button>
+      </Box>
+    </Container>
+  );
 }
