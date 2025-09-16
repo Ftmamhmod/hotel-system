@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import type { loginDataTypes } from "../../../Services/INTERFACES";
 import {
   EMAIL_VALIDATION,
-  PASSWORD_VALIDATION,
+  REQUIRED_VALIDATION,
 } from "../../../Services/VALIDATIONS";
 import { axiosInstance, USERS_URLS } from "../../../Services/END_POINTS";
 import { toast } from "react-toastify";
@@ -38,8 +38,8 @@ export default function Login() {
       console.log(response);
       localStorage.setItem("token", response.data.token);
       // getLoginData();
-      toast.success(`Welcome to PMS!`);
-      navigate("/dashboard");
+      toast.success(`Welcome to StayCation!`);
+      navigate("/landing-page");
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
       toast.error(error.response?.data?.message || "Something went wrong");
@@ -99,7 +99,7 @@ export default function Login() {
             Password
           </Typography>
           <FilledInput
-            {...register("password", PASSWORD_VALIDATION)}
+            {...register("password", REQUIRED_VALIDATION('Password'))}
             type={showPassword ? "text" : "password"}
             endAdornment={
               <InputAdornment position="end">
