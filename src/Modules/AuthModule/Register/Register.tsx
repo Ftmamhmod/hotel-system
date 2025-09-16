@@ -10,7 +10,12 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
 import FilledInput from "@mui/material/FilledInput";
-import { EMAIL_VALIDATION, PASSWORD_VALIDATION, PHONE_VALIDATION, REQUIRED_VALIDATION } from "../../../Services/VALIDATIONS";
+import {
+  EMAIL_VALIDATION,
+  PASSWORD_VALIDATION,
+  PHONE_VALIDATION,
+  REQUIRED_VALIDATION,
+} from "../../../Services/VALIDATIONS";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
@@ -18,13 +23,11 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import loading from "../../../Images/loading.gif";
 import google from "../../../Images/google.webp";
-import facebook from "../../../Images/facebook.png"
+import facebook from "../../../Images/facebook.png";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 
-
 export default function ChangePassword() {
-
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
@@ -48,16 +51,15 @@ export default function ChangePassword() {
   };
 
   return (
-
     <Container>
       <Box>
         <Typography variant="h4" component="h1" sx={{ fontWeight: "600" }}>
           Sign up
         </Typography>
-        <Typography variant="body1" component="p" sx={{ marginY: "30px" }}>
+        <Typography variant="body1" component="p" sx={{ marginY: "20px" }}>
           If you already have an account register
           <Typography>
-            You can {''}
+            You can {""}
             <Link
               href="/register"
               underline="none"
@@ -68,13 +70,12 @@ export default function ChangePassword() {
           </Typography>
         </Typography>
       </Box>
-      <Box onSubmit={handleSubmit(onSubmit)} component="form">
-
+      <Box onSubmit={handleSubmit(onSubmit)} component="form" marginTop={'40px'}>
         {/* Username */}
         <FormControl fullWidth>
           <Typography color="#152C5B">User Name</Typography>
           <FilledInput
-            {...register("userName", REQUIRED_VALIDATION('Username'))}
+            {...register("userName", REQUIRED_VALIDATION("Username"))}
             id="userName"
             placeholder="Please type here..."
             disableUnderline
@@ -98,7 +99,7 @@ export default function ChangePassword() {
         </FormControl>
 
         {/* Phone number - Country */}
-        <Grid container spacing={3} sx={{ marginY: '30px' }}>
+        <Grid container spacing={3} sx={{ marginTop: "20px" }}>
           <Grid size={{ xs: 12, md: 6 }}>
             {/* Phone number */}
             <FormControl fullWidth>
@@ -133,7 +134,7 @@ export default function ChangePassword() {
             <FormControl fullWidth>
               <Typography color="#152C5B">Country</Typography>
               <FilledInput
-                {...register("country", REQUIRED_VALIDATION('Country'))}
+                {...register("country", REQUIRED_VALIDATION("Country"))}
                 id="country"
                 placeholder="Please type here..."
                 disableUnderline
@@ -160,8 +161,9 @@ export default function ChangePassword() {
 
         {/* Email */}
         <FormControl fullWidth>
-          {/* <InputLabel htmlFor="email">Email address</InputLabel> */}
-          <Typography color="#152C5B">Email Address</Typography>
+          <Typography color="#152C5B" sx={{ marginTop: "20px" }}>
+            Email Address
+          </Typography>
           <FilledInput
             {...register("email", EMAIL_VALIDATION)}
             id="email"
@@ -186,9 +188,38 @@ export default function ChangePassword() {
           )}
         </FormControl>
 
+        {/* Role */}
+        <FormControl fullWidth>
+          <Typography color="#152C5B" sx={{ marginTop: "20px" }}>
+            Role
+          </Typography>
+          <FilledInput
+            {...register("role", REQUIRED_VALIDATION("Role"))}
+            id="role"
+            placeholder="Please type here..."
+            disableUnderline
+            sx={{
+              bgcolor: "#F5F6F8",
+              borderRadius: "4px",
+              marginTop: "10px",
+              "& .MuiInputBase-input": {
+                py: "10px",
+                "::placeholder": {
+                  color: "#b4b4b4ff",
+                },
+              },
+            }}
+          />
+          {errors.role && (
+            <Typography sx={{ color: "red" }}>
+              {errors.role.message as string}
+            </Typography>
+          )}
+        </FormControl>
+
         {/* Password */}
         <FormControl fullWidth>
-          <Typography color="#152C5B" sx={{ marginTop: "30px" }}>
+          <Typography color="#152C5B" sx={{ marginTop: "20px" }}>
             Password
           </Typography>
           <FilledInput
@@ -233,7 +264,7 @@ export default function ChangePassword() {
 
         {/* Confirm Password */}
         <FormControl fullWidth>
-          <Typography color="#152C5B" sx={{ marginTop: "30px" }}>
+          <Typography color="#152C5B" sx={{ marginTop: "20px" }}>
             Confirm Password
           </Typography>
           <FilledInput
@@ -243,7 +274,9 @@ export default function ChangePassword() {
               <InputAdornment position="end">
                 <IconButton
                   aria-label={
-                    showConfirmPassword ? "hide the password" : "display the password"
+                    showConfirmPassword
+                      ? "hide the password"
+                      : "display the password"
                   }
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   onMouseDown={(e) => e.preventDefault()}
@@ -274,7 +307,6 @@ export default function ChangePassword() {
               {errors.confirmPassword.message as string}
             </Typography>
           )}
-
         </FormControl>
 
         <Button
@@ -291,7 +323,7 @@ export default function ChangePassword() {
             fontSize: "17px",
           }}
         >
-          Login{" "}
+          Sign up
           <img
             hidden={!isSubmitting}
             src={loading}
@@ -300,9 +332,19 @@ export default function ChangePassword() {
           />
         </Button>
 
-        <Grid container spacing={3} justifyContent="center" alignItems="center" marginBottom={'20px'}>
-          <Grid size={2} textAlign={'center'} sx={{cursor:'pointer'}}><img src={google} alt="google" width={'50%'}/></Grid>
-          <Grid size={2} textAlign={'center'} sx={{cursor:'pointer'}}><img src={facebook} alt="facebook" width={'50%'} /></Grid>
+        <Grid
+          container
+          spacing={3}
+          justifyContent="center"
+          alignItems="center"
+          marginBottom={"20px"}
+        >
+          <Grid size={2} textAlign={"center"} sx={{ cursor: "pointer" }}>
+            <img src={google} alt="google" width={"50%"} />
+          </Grid>
+          <Grid size={2} textAlign={"center"} sx={{ cursor: "pointer" }}>
+            <img src={facebook} alt="facebook" width={"50%"} />
+          </Grid>
         </Grid>
       </Box>
     </Container>
