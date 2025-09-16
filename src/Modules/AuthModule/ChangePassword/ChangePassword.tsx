@@ -8,7 +8,6 @@ import type { AxiosError } from "axios";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 import FormControl from "@mui/material/FormControl";
 import FilledInput from "@mui/material/FilledInput";
 import { PASSWORD_VALIDATION } from "../../../Services/VALIDATIONS";

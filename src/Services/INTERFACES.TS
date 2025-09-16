@@ -8,3 +8,14 @@ export interface changePassDataTypes {
   newPassword: string;
   confirmPassword: string;
 }
+
+export interface RegisterTypes {
+  userName: string;
+  email: string;
+  country: string;
+  profileImage?: string;
+  role: string,
+  phoneNumber: string;
+  password: string;
+  confirmPassword: string;
+}
