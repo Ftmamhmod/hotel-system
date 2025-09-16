@@ -8,8 +8,8 @@ export default function AuthLayout() {
   const { pathname } = useLocation();
   // console.log(pathname)
   return (
-    <Box sx={{ flexGrow: 1, height: "100vh" }}>
-      <Grid container sx={{ height: "100%" }}>
+    <Box sx={{ flexGrow: 1, minHeight: "100vh" }}>
+      <Grid container sx={{ minHeight: "100vh" }}>
         <Grid
           size={{xs:12, md:6}}
           sx={{
@@ -36,7 +36,10 @@ export default function AuthLayout() {
             </Container>
           </Box>
         </Grid>
-        <Grid size={{xs:12, md:6}} sx={{ padding: "10px", height: "100%" }}>
+        <Grid size={{xs:12, md:6}} sx={{ padding: "10px", display: "flex",
+        flexDirection: "column",
+        minHeight: "100%"
+         }}>
           {(pathname == "/login") && (
             <Box className="login-bg auth-bg">
                 <h2>Sign in to Roamhome</h2>
