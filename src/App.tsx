@@ -19,6 +19,7 @@ import RoomData from "./Modules/AdminModule/Rooms/RoomData";
 import FacilitiesList from "./Modules/AdminModule/Facilities/FacilitiesList";
 import ADSList from "./Modules/AdminModule/ADS/ADSList";
 import BookingList from "./Modules/AdminModule/Booking/BookingList";
+import { AuthContextProvider } from "./Contexts/AuthContext/AuthContext";
 
 function App() {
 const routes = createBrowserRouter([
@@ -67,7 +68,9 @@ const routes = createBrowserRouter([
   return (
     <>
     <ToastContainer/>
-      <RouterProvider router={routes}></RouterProvider>
+      <AuthContextProvider>
+        <RouterProvider router={routes}></RouterProvider>
+      </AuthContextProvider>
     </>
   );
 }

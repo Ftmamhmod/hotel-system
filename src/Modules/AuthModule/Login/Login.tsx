@@ -8,7 +8,7 @@ import Link from "@mui/material/Link";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import type { loginDataTypes } from "../../../Services/INTERFACES";
@@ -21,10 +21,13 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import type { AxiosError } from "axios";
 import loading from "../../../Images/loading.gif";
+import { AuthContext } from "../../../Contexts/AuthContext/AuthContext";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+
+  const {getLoginData} = useContext(AuthContext)
 
   const {
     register,
@@ -35,9 +38,10 @@ export default function Login() {
   const onSubmit = async (data: loginDataTypes) => {
     try {
       const response = await axiosInstance.post(USERS_URLS.LOGIN, data);
-      console.log(response);
-      localStorage.setItem("token", response.data.token);
-      // getLoginData();
+      // console.log(response);
+      localStorage.setItem("token", response.data.data.token.replace(/^Bearer\s+/, ""));
+      localStorage.setItem("userData", JSON.stringify(response.data.data.user))
+      getLoginData();
       toast.success(`Welcome to StayCation!`);
       navigate("/landing-page");
     } catch (err) {
