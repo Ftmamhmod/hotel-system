@@ -15,6 +15,7 @@ export default function AuthLayout() {
           sx={{
             display: "flex",
             flexDirection: "column",
+            marginBottom: {xs:'30px', md:'0px'}
           }}
         >
           <img
@@ -37,33 +38,33 @@ export default function AuthLayout() {
         </Grid>
         <Grid size={{xs:12, md:6}} sx={{ padding: "10px", height: "100%" }}>
           {(pathname == "/login") && (
-            <Container className="login-bg auth-bg">
+            <Box className="login-bg auth-bg">
                 <h2>Sign in to Roamhome</h2>
-            </Container>
+            </Box>
           )}
 
           {(pathname == "/change-password") && (
-            <Container className="change-bg auth-bg">
+            <Box className="change-bg auth-bg">
                 <h2>Change Password</h2>
-            </Container>
+            </Box>
           )}
 
           {(pathname == "/register") && (
-            <Container className="register-bg auth-bg">
+            <Box className="register-bg auth-bg">
                 <h2>Sign up to Roamhome</h2>
-            </Container>
+            </Box>
           )}
 
           {(pathname == "/forgot-password") && (
-            <Container className="forgot-bg auth-bg">
+            <Box className="forgot-bg auth-bg">
                 <h2>Forgot Password</h2>
-            </Container>
+            </Box>
           )}
 
           {(pathname == "/reset-password") && (
-            <Container className="reset-bg auth-bg">
+            <Box className="reset-bg auth-bg">
                 <h2>Reset Password</h2>
-            </Container>
+            </Box>
           )}
         </Grid>
       </Grid>
