@@ -21,7 +21,6 @@ import google from "../../../Images/google.webp";
 import facebook from "../../../Images/facebook.png"
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import Item from "@mui/material/Grid";
 
 
 export default function ChangePassword() {
@@ -38,7 +37,7 @@ export default function ChangePassword() {
 
   const onSubmit = async (data: RegisterTypes) => {
     try {
-      const response = await axiosInstance.post(USERS_URLS.CHANGE_PASSWORD, data);
+      const response = await axiosInstance.post(USERS_URLS.REGISTER, data);
       console.log(response);
       toast.success(response.data.message);
       navigate("/login");
