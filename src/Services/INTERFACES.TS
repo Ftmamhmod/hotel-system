@@ -17,18 +17,27 @@ export interface RegisterTypes {
   email: string;
   country: string;
   profileImage?: string;
-  role: string,
+  role: string;
   phoneNumber: string;
   password: string;
   confirmPassword: string;
 }
 
 export interface AuthContextType {
-  loginData: JwtPayload | null,
+  loginData: JwtPayload | null;
   getLoginData: () => void;
   logout: () => void;
 }
 
 export interface AuthProviderProps {
   children: ReactNode;
+}
+export interface IForgotPasswordTypes {
+  email: string;
+}
+export interface IResetPasswordTypes {
+  email: string;
+  seed: string;
+  password: string;
+  confirmPassword: string;
 }
