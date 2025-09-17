@@ -46,7 +46,8 @@ export default function Login() {
       localStorage.setItem("userData", JSON.stringify(response.data.data.user));
       getLoginData();
       toast.success(`Welcome to StayCation!`);
-      navigate("/landing-page");
+      if (response.data.data.user.role == "admin") navigate("/dashboard");
+      else navigate("/landing-page");
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
       toast.error(error.response?.data?.message || "Something went wrong");
