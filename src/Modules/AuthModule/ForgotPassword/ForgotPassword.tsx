@@ -41,6 +41,8 @@ export default function ForgotPassword() {
   };
   return (
     <Container>
+      <title>Staycation | Forgot Password</title>
+
       <Box>
         <Typography variant="h4" component="h1" sx={{ fontWeight: "600" }}>
           Forgot password

@@ -54,6 +54,7 @@ export default function ResetPassword() {
   };
   return (
     <Container>
+      <title>Staycation | Reset Password</title>
       <Box>
         <Typography variant="h4" component="h1" sx={{ fontWeight: "600" }}>
           Reset Password

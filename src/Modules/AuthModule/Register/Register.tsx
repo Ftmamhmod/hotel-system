@@ -52,6 +52,7 @@ export default function ChangePassword() {
 
   return (
     <Container>
+      <title>Staycation | Sign up</title>
       <Box>
         <Typography variant="h4" component="h1" sx={{ fontWeight: "600" }}>
           Sign up
@@ -70,7 +71,11 @@ export default function ChangePassword() {
           </Typography>
         </Typography>
       </Box>
-      <Box onSubmit={handleSubmit(onSubmit)} component="form" marginTop={'40px'}>
+      <Box
+        onSubmit={handleSubmit(onSubmit)}
+        component="form"
+        marginTop={"40px"}
+      >
         {/* Username */}
         <FormControl fullWidth>
           <Typography color="#152C5B">User Name</Typography>
