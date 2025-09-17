@@ -18,9 +18,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import loading from "../../../Images/loading.gif";
 
-
 export default function ChangePassword() {
-
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -34,7 +32,10 @@ export default function ChangePassword() {
 
   const onSubmit = async (data: changePassDataTypes) => {
     try {
-      const response = await axiosInstance.post(USERS_URLS.CHANGE_PASSWORD, data);
+      const response = await axiosInstance.post(
+        USERS_URLS.CHANGE_PASSWORD,
+        data
+      );
       console.log(response);
       toast.success(response.data.message);
       navigate("/login");
@@ -45,8 +46,8 @@ export default function ChangePassword() {
   };
 
   return (
-
     <Container>
+      <title>Staycation | Change Password</title>
       <Box>
         <Typography variant="h4" component="h1" sx={{ fontWeight: "600" }}>
           Change Password
@@ -56,7 +57,6 @@ export default function ChangePassword() {
         </Typography>
       </Box>
       <Box onSubmit={handleSubmit(onSubmit)} component="form">
-
         <FormControl fullWidth>
           <Typography color="#152C5B" sx={{ marginTop: "40px" }}>
             Password
@@ -68,7 +68,9 @@ export default function ChangePassword() {
               <InputAdornment position="end">
                 <IconButton
                   aria-label={
-                    showOldPassword ? "hide the password" : "display the password"
+                    showOldPassword
+                      ? "hide the password"
+                      : "display the password"
                   }
                   onClick={() => setShowOldPassword(!showOldPassword)}
                   onMouseDown={(e) => e.preventDefault()}
@@ -112,7 +114,9 @@ export default function ChangePassword() {
               <InputAdornment position="end">
                 <IconButton
                   aria-label={
-                    showNewPassword ? "hide the password" : "display the password"
+                    showNewPassword
+                      ? "hide the password"
+                      : "display the password"
                   }
                   onClick={() => setShowNewPassword(!showNewPassword)}
                   onMouseDown={(e) => e.preventDefault()}
@@ -143,7 +147,6 @@ export default function ChangePassword() {
               {errors.newPassword.message as string}
             </Typography>
           )}
-
         </FormControl>
 
         <FormControl fullWidth>
@@ -157,7 +160,9 @@ export default function ChangePassword() {
               <InputAdornment position="end">
                 <IconButton
                   aria-label={
-                    showConfirmPassword ? "hide the password" : "display the password"
+                    showConfirmPassword
+                      ? "hide the password"
+                      : "display the password"
                   }
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   onMouseDown={(e) => e.preventDefault()}
@@ -188,7 +193,6 @@ export default function ChangePassword() {
               {errors.confirmPassword.message as string}
             </Typography>
           )}
-
         </FormControl>
 
         <Button

@@ -27,7 +27,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  const {getLoginData} = useContext(AuthContext)
+  const { getLoginData } = useContext(AuthContext);
 
   const {
     register,
@@ -39,8 +39,11 @@ export default function Login() {
     try {
       const response = await axiosInstance.post(USERS_URLS.LOGIN, data);
       // console.log(response);
-      localStorage.setItem("token", response.data.data.token.replace(/^Bearer\s+/, ""));
-      localStorage.setItem("userData", JSON.stringify(response.data.data.user))
+      localStorage.setItem(
+        "token",
+        response.data.data.token.replace(/^Bearer\s+/, "")
+      );
+      localStorage.setItem("userData", JSON.stringify(response.data.data.user));
       getLoginData();
       toast.success(`Welcome to StayCation!`);
       navigate("/landing-page");
@@ -52,6 +55,7 @@ export default function Login() {
 
   return (
     <Container>
+      <title>Staycation | Sign in</title>
       <Box>
         <Typography variant="h4" component="h1" sx={{ fontWeight: "600" }}>
           Sign in
@@ -103,7 +107,7 @@ export default function Login() {
             Password
           </Typography>
           <FilledInput
-            {...register("password", REQUIRED_VALIDATION('Password'))}
+            {...register("password", REQUIRED_VALIDATION("Password"))}
             type={showPassword ? "text" : "password"}
             endAdornment={
               <InputAdornment position="end">
