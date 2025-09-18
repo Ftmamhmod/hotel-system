@@ -62,17 +62,15 @@ export default function Login() {
           Sign in
         </Typography>
         <Typography variant="body1" component="p" sx={{ marginY: "30px" }}>
-          If you don't have an account register{" "}
-          <Typography>
-            You can{" "}
-            <Link
-              href="/register"
-              underline="none"
-              sx={{ color: "#152C5B", fontWeight: "bold" }}
-            >
-              Register here !
-            </Link>
-          </Typography>
+          If you don't have an account register <br />
+          You can {' '}
+          <Link
+            href="/register"
+            underline="none"
+            sx={{ color: "#152C5B", fontWeight: "bold" }}
+          >
+            Register here !
+          </Link>
         </Typography>
       </Box>
       <Box onSubmit={handleSubmit(onSubmit)} component="form">
@@ -172,7 +170,7 @@ export default function Login() {
             fontSize: "17px",
           }}
         >
-          Login{" "}
+          Login
           <img
             hidden={!isSubmitting}
             src={loading}

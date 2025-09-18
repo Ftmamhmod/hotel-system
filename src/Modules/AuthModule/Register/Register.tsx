@@ -26,6 +26,9 @@ import google from "../../../Images/google.webp";
 import facebook from "../../../Images/facebook.png";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
+import UploadIcon from "@mui/icons-material/Upload";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 export default function ChangePassword() {
   const [showPassword, setShowPassword] = useState(false);
@@ -38,10 +41,25 @@ export default function ChangePassword() {
     formState: { errors, isSubmitting },
   } = useForm<RegisterTypes>();
 
+  const appendToFormData = (data: RegisterTypes) => {
+    const formData = new FormData();
+    formData.append("userName", data.userName);
+    formData.append("email", data.email);
+    formData.append("role", data.role);
+    formData.append("country", data.country);
+    formData.append("phoneNumber", data.phoneNumber);
+    formData.append("password", data.password);
+    formData.append("confirmPassword", data.confirmPassword);
+    if (selectedFile) {
+      formData.append("profileImage", selectedFile);
+    }
+    return formData;
+  };
+
   const onSubmit = async (data: RegisterTypes) => {
+    const userData = appendToFormData(data);
     try {
-      const response = await axiosInstance.post(USERS_URLS.REGISTER, data);
-      console.log(response);
+      const response = await axiosInstance.post(USERS_URLS.REGISTER, userData);
       toast.success(response.data.message);
       navigate("/login");
     } catch (err) {
@@ -49,6 +67,10 @@ export default function ChangePassword() {
       toast.error(error.response?.data?.message || "Something went wrong");
     }
   };
+
+  const [preview, setPreview] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  // let imgRef = useRef();
 
   return (
     <Container>
@@ -58,17 +80,15 @@ export default function ChangePassword() {
           Sign up
         </Typography>
         <Typography variant="body1" component="p" sx={{ marginY: "20px" }}>
-          If you already have an account register
-          <Typography>
-            You can {""}
-            <Link
-              href="/login"
-              underline="none"
-              sx={{ color: "#EB5148", fontWeight: "bold" }}
-            >
-              Login here !
-            </Link>
-          </Typography>
+          If you already have an account register <br />
+          You can {""}
+          <Link
+            href="/login"
+            underline="none"
+            sx={{ color: "#EB5148", fontWeight: "bold" }}
+          >
+            Login here !
+          </Link>
         </Typography>
       </Box>
       <Box
@@ -76,6 +96,65 @@ export default function ChangePassword() {
         component="form"
         marginTop={"40px"}
       >
+        {/* Profile Image */}
+        <FormControl fullWidth sx={{ marginBottom: "30px" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Typography color="#152C5B" sx={{ marginTop: "20px" }}>
+              Upload Image
+            </Typography>
+            <label htmlFor="profileImage" style={{ cursor: "pointer" }}>
+              {!preview ? (
+                <UploadIcon
+                  color="primary"
+                  sx={{ marginTop: "10px", cursor: "pointer" }}
+                />
+              ) : (
+                // Preview
+                <Box mt={2}>
+                  <img
+                    src={preview}
+                    alt="preview"
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      borderRadius: "50%",
+                    }}
+                  />
+                </Box>
+              )}
+            </label>
+
+            <input
+              type="file"
+              accept="image/*"
+              id="profileImage"
+              style={{ display: "none" }}
+              {...register(
+                "profileImage",
+                REQUIRED_VALIDATION("Profile Image")
+              )}
+              onChange={(e) => {
+                const file = e.target.files?.[0] || null;
+                setSelectedFile(file);
+                if (file) {
+                  setPreview(URL.createObjectURL(file));
+                }
+              }}
+            />
+            {errors.profileImage && (
+              <Typography sx={{ color: "red" }}>
+                {errors.profileImage.message as string}
+              </Typography>
+            )}
+          </Box>
+        </FormControl>
+
         {/* Username */}
         <FormControl fullWidth>
           <Typography color="#152C5B">User Name</Typography>
@@ -194,27 +273,39 @@ export default function ChangePassword() {
         </FormControl>
 
         {/* Role */}
-        <FormControl fullWidth>
+        <FormControl fullWidth variant="outlined">
           <Typography color="#152C5B" sx={{ marginTop: "20px" }}>
             Role
           </Typography>
-          <FilledInput
+          <Select
             {...register("role", REQUIRED_VALIDATION("Role"))}
+            defaultValue=""
+            displayEmpty
+            renderValue={(selected) => {
+              if (selected === "") {
+                return (
+                  <span style={{ color: "#b4b4b4ff" }}>Select a Role...</span>
+                );
+              }
+              return selected;
+            }}
             id="role"
-            placeholder="Please type here..."
-            disableUnderline
             sx={{
               bgcolor: "#F5F6F8",
               borderRadius: "4px",
               marginTop: "10px",
               "& .MuiInputBase-input": {
                 py: "10px",
-                "::placeholder": {
-                  color: "#b4b4b4ff",
-                },
+              },
+              "& .MuiOutlinedInput-notchedOutline": {
+                border: "none", //removes the border
               },
             }}
-          />
+          >
+            <MenuItem value={"admin"}>Admin</MenuItem>
+            <MenuItem value={"user"}>User</MenuItem>
+          </Select>
+
           {errors.role && (
             <Typography sx={{ color: "red" }}>
               {errors.role.message as string}
@@ -292,7 +383,7 @@ export default function ChangePassword() {
                 </IconButton>
               </InputAdornment>
             }
-            id="password"
+            id="confirmPassword"
             placeholder="Please type here..."
             disableUnderline
             sx={{
