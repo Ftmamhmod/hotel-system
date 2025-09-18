@@ -13,7 +13,10 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import type { AxiosError } from "axios";
 import loading from "../../../Images/loading.gif";
+import { useTranslation } from "react-i18next";
+import "../../../i18n/i18n";
 export default function ForgotPassword() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const {
@@ -29,45 +32,42 @@ export default function ForgotPassword() {
         data
       );
 
-      toast.success(
-        response?.data?.message ||
-          `Check your email for password reset instructions.`
-      );
+      toast.success(response?.data?.message || t("forgot_check_email"));
       navigate("/reset-password", { state: { email: data.email } });
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
-      toast.error(error.response?.data?.message || "Something went wrong");
+      toast.error(error.response?.data?.message || t("forgot_error"));
     }
   };
   return (
     <Container>
-      <title>Staycation | Forgot Password</title>
+      <title>Staycation | {t("forgot_title")}</title>
 
       <Box>
         <Typography variant="h4" component="h1" sx={{ fontWeight: "600" }}>
-          Forgot password
+          {t("forgot_title")}
         </Typography>
         <Typography variant="body1" component="p" sx={{ marginY: "30px" }}>
-          If you already have an account register
+          {t("forgot_subtitle")}
           <Typography>
-            You can{" "}
+            {t("forgot_login_text")}{" "}
             <Link
               href="/login"
               underline="none"
               sx={{ color: "#eb5148", fontWeight: "bold" }}
             >
-              Login here !
+              {t("forgot_login_link")}
             </Link>
           </Typography>
         </Typography>
       </Box>
       <Box onSubmit={handleSubmit(onSubmit)} component="form">
         <FormControl fullWidth>
-          <Typography color="#152C5B">Email Address</Typography>
+          <Typography color="#152C5B">{t("email_label")}</Typography>
           <FilledInput
             {...register("email", EMAIL_VALIDATION)}
             id="email"
-            placeholder="Please type here..."
+            placeholder={t("email_placeholder")}
             disableUnderline
             sx={{
               bgcolor: "#F5F6F8",
@@ -100,7 +100,7 @@ export default function ForgotPassword() {
             fontSize: "17px",
           }}
         >
-          send mail{" "}
+          {t("forgot_send_mail")}
           <img
             hidden={!isSubmitting}
             src={loading}

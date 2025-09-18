@@ -22,8 +22,10 @@ import { useNavigate } from "react-router-dom";
 import type { AxiosError } from "axios";
 import loading from "../../../Images/loading.gif";
 import { AuthContext } from "../../../Contexts/AuthContext/AuthContext";
+import { useTranslation } from "react-i18next";
 
 export default function Login() {
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
@@ -46,6 +48,12 @@ export default function Login() {
       localStorage.setItem("userData", JSON.stringify(response.data.data.user));
       getLoginData();
       toast.success(`Welcome to StayCation!`);
+      if (response.data.data.user.role === "admin") {
+        navigate("/dashboard");
+        return;
+      } else if (response.data.data.user.role === "user") {
+        navigate("/landing-page");
+      }
       if (response.data.data.user.role == "admin") navigate("/dashboard");
       else navigate("/landing-page");
     } catch (err) {
@@ -59,24 +67,24 @@ export default function Login() {
       <title>Staycation | Sign in</title>
       <Box>
         <Typography variant="h4" component="h1" sx={{ fontWeight: "600" }}>
-          Sign in
+          {t("login.signIn")}
         </Typography>
         <Typography variant="body1" component="p" sx={{ marginY: "30px" }}>
-          If you don't have an account register <br />
-          You can {' '}
-          <Link
-            href="/register"
-            underline="none"
-            sx={{ color: "#152C5B", fontWeight: "bold" }}
-          >
-            Register here !
-          </Link>
+          {t("login.noAccount")} <br />
+            {t("login.registerPrompt")}
+            <Link
+              href="/register"
+              underline="none"
+              sx={{ color: "#152C5B", fontWeight: "bold" }}
+            >
+              {t("login.registerPrompt")}
+            </Link>
         </Typography>
       </Box>
       <Box onSubmit={handleSubmit(onSubmit)} component="form">
         <FormControl fullWidth>
           {/* <InputLabel htmlFor="email">Email address</InputLabel> */}
-          <Typography color="#152C5B">Email Address</Typography>
+          <Typography color="#152C5B">{t("Email_Address")}</Typography>
           <FilledInput
             {...register("email", EMAIL_VALIDATION)}
             id="email"
@@ -103,7 +111,7 @@ export default function Login() {
         <FormControl fullWidth>
           {/* <InputLabel htmlFor="email">Email address</InputLabel> */}
           <Typography color="#152C5B" sx={{ marginTop: "50px" }}>
-            Password
+            {t("Password")}
           </Typography>
           <FilledInput
             {...register("password", REQUIRED_VALIDATION("Password"))}
@@ -154,7 +162,7 @@ export default function Login() {
               textAlign: "end",
             }}
           >
-            Forgot Password?
+            {t("Forgot_Password")}
           </Link>
         </FormControl>
         <Button
@@ -170,7 +178,7 @@ export default function Login() {
             fontSize: "17px",
           }}
         >
-          Login
+          {t("login.signIn")}
           <img
             hidden={!isSubmitting}
             src={loading}

@@ -3,26 +3,45 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import logo from "../../../Images/logo.png";
+import { useTranslation } from "react-i18next";
+import Button from "@mui/material/Button";
 
 export default function AuthLayout() {
   const { pathname } = useLocation();
-  // console.log(pathname)
+  const { i18n } = useTranslation();
+  const toggleLang = () => {
+    i18n.changeLanguage(i18n.language === "ar" ? "en" : "ar");
+  };
+  const { t } = useTranslation();
   return (
     <Box sx={{ flexGrow: 1, minHeight: "100vh" }}>
       <Grid container sx={{ minHeight: "100vh" }}>
         <Grid
-          size={{xs:12, md:6}}
+          size={{ xs: 12, md: 6 }}
           sx={{
             display: "flex",
             flexDirection: "column",
-            marginBottom: {xs:'30px', md:'0px'}
+            marginBottom: { xs: "30px", md: "0px" },
           }}
         >
-          <img
-            src={logo}
-            alt="logo"
-            style={{ alignSelf: "flex-start", margin: "30px" }}
-          />
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <img
+              src={logo}
+              alt="logo"
+              style={{ alignSelf: "flex-start", margin: "30px" }}
+            />
+            <Box
+              sx={{
+                mt: 3,
+                mb: 2,
+              }}
+            >
+              <Button variant="outlined" onClick={toggleLang}>
+                {i18n.language === "ar" ? "English" : "العربية"}
+              </Button>
+            </Box>
+          </Box>
+
           <Box
             sx={{
               flexGrow: 1,
@@ -36,37 +55,42 @@ export default function AuthLayout() {
             </Container>
           </Box>
         </Grid>
-        <Grid size={{xs:12, md:6}} sx={{ padding: "10px", display: "flex",
-        flexDirection: "column",
-        minHeight: "100%"
-         }}>
-          {(pathname == "/login") && (
+        <Grid
+          size={{ xs: 12, md: 6 }}
+          sx={{
+            padding: "10px",
+            display: "flex",
+            flexDirection: "column",
+            minHeight: "100%",
+          }}
+        >
+          {pathname == "/login" && (
             <Box className="login-bg auth-bg">
-                <h2>Sign in to Roamhome</h2>
+              <h2> {t("Sign_in_to_Roamhome")}</h2>
             </Box>
           )}
 
-          {(pathname == "/change-password") && (
+          {pathname == "/change-password" && (
             <Box className="change-bg auth-bg">
-                <h2>Change Password</h2>
+              <h2>{t("Change_Password")}</h2>
             </Box>
           )}
 
-          {(pathname == "/register") && (
+          {pathname == "/register" && (
             <Box className="register-bg auth-bg">
-                <h2>Sign up to Roamhome</h2>
+              <h2>{t("Sign_up_to_Roamhome")}</h2>
             </Box>
           )}
 
-          {(pathname == "/forgot-password") && (
+          {pathname == "/forgot-password" && (
             <Box className="forgot-bg auth-bg">
-                <h2>Forgot Password</h2>
+              <h2>{t("Forgot_Password")}</h2>
             </Box>
           )}
 
-          {(pathname == "/reset-password") && (
+          {pathname == "/reset-password" && (
             <Box className="reset-bg auth-bg">
-                <h2>Reset Password</h2>
+              <h2>{t("Reset_Password")}</h2>
             </Box>
           )}
         </Grid>

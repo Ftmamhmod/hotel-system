@@ -1,8 +1,6 @@
+import { useTranslation } from "react-i18next";
 
 export default function AdminNavbar() {
-  return (
-    <div>
-      AdminNavbar
-    </div>
-  )
+  const { t } = useTranslation();
+  return <div>{t("admin_navbar")}</div>;
 }
