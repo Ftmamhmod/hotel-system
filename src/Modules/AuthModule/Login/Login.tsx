@@ -70,8 +70,7 @@ export default function Login() {
           {t("login.signIn")}
         </Typography>
         <Typography variant="body1" component="p" sx={{ marginY: "30px" }}>
-          {t("login.noAccount")}
-          <Typography>
+          {t("login.noAccount")} <br />
             {t("login.registerPrompt")}
             <Link
               href="/register"
@@ -80,7 +79,6 @@ export default function Login() {
             >
               {t("login.registerPrompt")}
             </Link>
-          </Typography>
         </Typography>
       </Box>
       <Box onSubmit={handleSubmit(onSubmit)} component="form">
