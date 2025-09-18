@@ -52,6 +52,8 @@ export default function Login() {
       } else if (response.data.data.user.role === "user") {
         navigate("/landing-page");
       }
+      if (response.data.data.user.role == "admin") navigate("/dashboard");
+      else navigate("/landing-page");
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
       toast.error(error.response?.data?.message || "Something went wrong");
