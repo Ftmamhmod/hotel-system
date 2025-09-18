@@ -3,5 +3,31 @@
   "admin_dashboard": "Admin Dashboard",
   "logout": "Logout",
   "admin_navbar": "Admin Navbar",
-  "admin_sidebar": "Admin Sidebar"
+  "admin_sidebar": "Admin Sidebar",
+  "Sign_in_to_Roamhome": "Sign in to Roamhome",
+  "Change_Password": "Change Password",
+  "Sign_up_to_Roamhome": "Sign up to Roamhome",
+  "Forgot_Password": "Forgot Password",
+  "Reset_Password": "Reset Password",
+  "Password": "Password",
+  "Email_Address": "Email Address",
+  "login": {
+    "signIn": "Sign In",
+    "noAccount": "If you don't have an account register",
+    "registerPrompt": "You can register here!"
+  },
+  "change_password": {
+    "Please_fill_the_below_data": "Please fill the below data",
+    "New_Password": "New Password",
+    "Confirm_Password": "Confirm Password"
+  },
+  "forgot_title": "Forgot password",
+  "forgot_subtitle": "If you already have an account register",
+  "forgot_login_text": "You can",
+  "forgot_login_link": "Login here !",
+  "email_label": "Email Address",
+  "email_placeholder": "Please type here...",
+  "forgot_send_mail": "send mail",
+  "forgot_check_email": "Check your email for password reset instructions.",
+  "forgot_error": "Something went wrong"
 }

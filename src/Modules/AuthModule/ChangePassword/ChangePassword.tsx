@@ -17,8 +17,10 @@ import Button from "@mui/material/Button";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import loading from "../../../Images/loading.gif";
+import { useTranslation } from "react-i18next";
 
 export default function ChangePassword() {
+  const { t } = useTranslation();
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -50,16 +52,16 @@ export default function ChangePassword() {
       <title>Staycation | Change Password</title>
       <Box>
         <Typography variant="h4" component="h1" sx={{ fontWeight: "600" }}>
-          Change Password
+          {t("Change_Password")}
         </Typography>
         <Typography variant="body1" component="p" sx={{ marginY: "20px" }}>
-          Please fill the below data
+          {t("change_password.Please_fill_the_below_data")}
         </Typography>
       </Box>
       <Box onSubmit={handleSubmit(onSubmit)} component="form">
         <FormControl fullWidth>
           <Typography color="#152C5B" sx={{ marginTop: "40px" }}>
-            Password
+            {t("Password")}
           </Typography>
           <FilledInput
             {...register("oldPassword", PASSWORD_VALIDATION)}
@@ -105,7 +107,7 @@ export default function ChangePassword() {
 
         <FormControl fullWidth>
           <Typography color="#152C5B" sx={{ marginTop: "30px" }}>
-            New Password
+            {t("change_password.New_Password")}
           </Typography>
           <FilledInput
             {...register("newPassword", PASSWORD_VALIDATION)}
@@ -151,7 +153,7 @@ export default function ChangePassword() {
 
         <FormControl fullWidth>
           <Typography color="#152C5B" sx={{ marginTop: "30px" }}>
-            Confirm Password
+            {t("change_password.Confirm_Password")}
           </Typography>
           <FilledInput
             {...register("confirmPassword", PASSWORD_VALIDATION)}
@@ -209,7 +211,7 @@ export default function ChangePassword() {
             fontSize: "17px",
           }}
         >
-          Login{" "}
+          {t("login.signIn")}
           <img
             hidden={!isSubmitting}
             src={loading}
