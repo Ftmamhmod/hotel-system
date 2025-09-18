@@ -46,6 +46,12 @@ export default function Login() {
       localStorage.setItem("userData", JSON.stringify(response.data.data.user));
       getLoginData();
       toast.success(`Welcome to StayCation!`);
+      if (response.data.data.user.role === "admin") {
+        navigate("/dashboard");
+        return;
+      } else if (response.data.data.user.role === "user") {
+        navigate("/landing-page");
+      }
       if (response.data.data.user.role == "admin") navigate("/dashboard");
       else navigate("/landing-page");
     } catch (err) {

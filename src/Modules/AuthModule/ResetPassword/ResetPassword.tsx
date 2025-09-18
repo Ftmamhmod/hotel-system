@@ -111,7 +111,7 @@ export default function ResetPassword() {
           <FilledInput
             {...register("seed", REQUIRED_VALIDATION("OTP"))}
             type="text"
-            id="password"
+            id="otp"
             placeholder="Please type here..."
             disableUnderline
             sx={{
@@ -202,7 +202,7 @@ export default function ResetPassword() {
                 </IconButton>
               </InputAdornment>
             }
-            id="password"
+            id="confirm-password"
             placeholder="Please type here..."
             disableUnderline
             sx={{
