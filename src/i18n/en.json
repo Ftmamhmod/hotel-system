@@ -10,7 +10,13 @@
   "Forgot_Password": "Forgot Password",
   "Reset_Password": "Reset Password",
   "Password": "Password",
+  "Confirm_Password": "Confirm Password",
   "Email_Address": "Email Address",
+  "Username": "User Name",
+  "Phone_Number": "Phone Number",
+  "Country": "Country",
+  "Role": "Role",
+  "Type_Here": "Please type here...",
   "login": {
     "signIn": "Sign In",
     "noAccount": "If you don't have an account register",
@@ -20,6 +26,13 @@
     "Please_fill_the_below_data": "Please fill the below data",
     "New_Password": "New Password",
     "Confirm_Password": "Confirm Password"
+  },
+  "register": {
+    "signup": "Sign up",
+    "alreadyAccount": "If you already have an account register",
+    "youCanSignin": "You can",
+    "loginHere": "Login here !",
+    "uploadImg": "Upload Image"
   },
   "forgot_title": "Forgot password",
   "forgot_subtitle": "If you already have an account register",

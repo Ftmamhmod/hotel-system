@@ -88,7 +88,7 @@ export default function Login() {
           <FilledInput
             {...register("email", EMAIL_VALIDATION)}
             id="email"
-            placeholder="Please type here..."
+            placeholder={t('Type_Here')}
             disableUnderline
             sx={{
               bgcolor: "#F5F6F8",
@@ -132,7 +132,7 @@ export default function Login() {
               </InputAdornment>
             }
             id="password"
-            placeholder="Please type here..."
+            placeholder={t('Type_Here')}
             disableUnderline
             sx={{
               bgcolor: "#F5F6F8",

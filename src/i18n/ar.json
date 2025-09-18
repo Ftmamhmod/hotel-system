@@ -10,7 +10,13 @@
   "Forgot_Password": "نسيت كلمة المرور",
   "Reset_Password": "إعادة تعيين كلمة المرور",
   "Password": "كلمة المرور",
+  "Confirm_Password": "تأكيد كلمة المرور",
   "Email_Address": "عنوان البريد الإلكتروني",
+  "Username": "اسم المستخدم",
+  "Phone_Number": "رقم الهاتف",
+  "Country": "البلد",
+  "Role": "الصلاحية",
+  "Type_Here": "من فضلك اكتب هنا...",
   "login": {
     "signIn": "تسجيل الدخول",
     "noAccount": "إذا لم يكن لديك حساب ، قم بالتسجيل",
@@ -20,6 +26,13 @@
     "Please_fill_the_below_data": "يرجى ملء البيانات أدناه",
     "New_Password": "كلمة المرور الجديدة",
     "Confirm_Password": "تأكيد كلمة المرور"
+  },
+  "register": {
+    "signup": "إنشاء حساب",
+    "alreadyAccount": "إذا كان لديك حساب بالفعل قم بالتسجيل",
+    "youCanSignin": "يمكنك تسجيل الدخول",
+    "loginHere": "من هنا !",
+    "uploadImg": "رفع صورة"
   },
   "forgot_title": "نسيت كلمة المرور",
   "forgot_subtitle": "إذا كان لديك حساب بالفعل، سجل الدخول",
