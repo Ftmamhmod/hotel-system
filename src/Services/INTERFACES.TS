@@ -41,3 +41,10 @@ export interface IResetPasswordTypes {
   password: string;
   confirmPassword: string;
 }
+export interface DeleteConfirmationProps {
+  open: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  title?: string;
+  message?: string;
+}
