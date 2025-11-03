@@ -125,7 +125,7 @@ export default function AdminNavbar({
                 }}
               />
             <Typography variant="body2" sx={{ fontWeight: 400, display: { xs: "none", sm: "block" } }}>
-              {loginData.userName || "default user"}
+              {loginData?.userName || "default user"}
             </Typography>
 
             <IconButton size="small" onClick={(e) => setAnchorEl(e.currentTarget)} aria-label="user-menu">
@@ -190,7 +190,7 @@ export default function AdminNavbar({
                 <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
                   {loginData?.userName}
                 </Typography>
-                {loginData?.role !== "—" && (
+                {loginData?.role !== "portal" && (  //????
                   <Chip
                     size="small"
                     color="primary"

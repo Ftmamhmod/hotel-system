@@ -41,7 +41,7 @@ export interface RegisterTypes {
 }
 
 export interface AuthContextType {
-  loginData: JwtPayload | null;
+  loginData: IUserData | null;
   getLoginData: () => void;
   logout: () => void;
   userProfile: IUserData | null;

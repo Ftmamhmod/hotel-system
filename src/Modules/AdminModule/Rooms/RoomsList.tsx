@@ -310,6 +310,7 @@ const open = Boolean(clickedRoom.anchorEl);
             <DeleteConfirmation
               open={deleteDialogOpen}
               onClose={() => setDeleteDialogOpen(false)}
+              handleClose={() => setDeleteDialogOpen(false)}
               onConfirm={handleDelete}
             />
     </>

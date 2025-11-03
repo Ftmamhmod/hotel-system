@@ -291,13 +291,14 @@ export default function BookingList() {
       <BookingData
         open={popUpOpen}
         handleClose={() => setPopUpOpen(false)}
-        bookingId={selectedBookingId}
+        bookingId={selectedBookingId?selectedBookingId:null}
       />
 
       {/* Delete Confirmation Dialog */}
       <DeleteConfirmation
         open={deleteDialogOpen}
         onClose={() => setDeleteDialogOpen(false)}
+        handleClose={() => setDeleteDialogOpen(false)}
         onConfirm={handleDelete}
       />
     </>
