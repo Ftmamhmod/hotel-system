@@ -18,7 +18,7 @@ import {
 } from "../../../Services/VALIDATIONS";
 import { axiosInstance, USERS_URLS } from "../../../Services/END_POINTS";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import type { AxiosError } from "axios";
 import loading from "../../../Images/loading.gif";
 import { AuthContext } from "../../../Contexts/AuthContext/AuthContext";
@@ -26,10 +26,14 @@ import { useTranslation } from "react-i18next";
 
 export default function Login() {
   const { t } = useTranslation();
+    const location = useLocation();
+
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const { getLoginData } = useContext(AuthContext);
+  const from =
+    (location.state as { from?: Location })?.from?.pathname || "/";
 
   const {
     register,
@@ -40,13 +44,14 @@ export default function Login() {
   const onSubmit = async (data: loginDataTypes) => {
     try {
       const response = await axiosInstance.post(USERS_URLS.LOGIN, data);
-      // console.log(response);
       localStorage.setItem(
         "token",
         response.data.data.token.replace(/^Bearer\s+/, "")
       );
       localStorage.setItem("userData", JSON.stringify(response.data.data.user));
       getLoginData();
+          navigate(from, { replace: true });
+
       toast.success(`Welcome to StayCation!`);
       if (response.data.data.user.role === "admin") {
         navigate("/dashboard");
@@ -71,14 +76,14 @@ export default function Login() {
         </Typography>
         <Typography variant="body1" component="p" sx={{ marginY: "30px" }}>
           {t("login.noAccount")} <br />
+          {t("login.registerPrompt")}
+          <Link
+            href="/register"
+            underline="none"
+            sx={{ color: "#152C5B", fontWeight: "bold" }}
+          >
             {t("login.registerPrompt")}
-            <Link
-              href="/register"
-              underline="none"
-              sx={{ color: "#152C5B", fontWeight: "bold" }}
-            >
-              {t("login.registerPrompt")}
-            </Link>
+          </Link>
         </Typography>
       </Box>
       <Box onSubmit={handleSubmit(onSubmit)} component="form">
@@ -88,7 +93,7 @@ export default function Login() {
           <FilledInput
             {...register("email", EMAIL_VALIDATION)}
             id="email"
-            placeholder={t('Type_Here')}
+            placeholder={t("Type_Here")}
             disableUnderline
             sx={{
               bgcolor: "#F5F6F8",
@@ -132,7 +137,7 @@ export default function Login() {
               </InputAdornment>
             }
             id="password"
-            placeholder={t('Type_Here')}
+            placeholder={t("Type_Here")}
             disableUnderline
             sx={{
               bgcolor: "#F5F6F8",

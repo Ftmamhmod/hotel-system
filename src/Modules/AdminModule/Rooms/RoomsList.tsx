@@ -9,7 +9,7 @@ import { axiosInstance, ROOMS_URLS } from "../../../Services/END_POINTS";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import type { AxiosError } from "axios";
-import type { RoomsListInterface } from "../../../Services/INTERFACES";
+import type { RoomsListInterface } from "../../../Services/INTERFACE";
 import noImg from "../../../Images/noImg.png";
 import Box from "@mui/material/Box";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -24,6 +24,9 @@ import { Button, Menu, MenuItem } from "@mui/material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import RoomsHeader from "./RoomsHeader";
+import { useNavigate } from "react-router-dom";
+import DeleteConfirmation from "../../Shared/DeleteConfirmation/DeleteConfirmation";
 
 export default function RoomsList() {
   const { t } = useTranslation();
@@ -36,13 +39,15 @@ export default function RoomsList() {
     "",
   ];
 
+  const navigate = useNavigate();
+
   const [rooms, setrooms] = useState<RoomsListInterface[] | []>([]);
   const [isLoading, setIsLoading] = useState(false);
   // const [totalRooms, setTotalRooms] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [activePage, setActivePage] = useState(1);
 
-  const getRooms = async (pageNumber:number) => {
+  const getRooms = async (pageNumber: number) => {
     try {
       setIsLoading(true);
       const response = await axiosInstance(ROOMS_URLS.GET_ALL, {
@@ -54,7 +59,6 @@ export default function RoomsList() {
       setrooms(response?.data?.data?.rooms);
       // setTotalRooms(response.data.data.totalCount);
       setTotalPages(Math.ceil(response.data.data.totalCount / 10));
-      console.log(response.data);
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
       toast.error(error.response?.data?.message || "Something went wrong");
@@ -62,14 +66,34 @@ export default function RoomsList() {
     setIsLoading(false);
   };
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const handleDelete = async () => {
+      try {
+        const response = await axiosInstance.delete(
+          ROOMS_URLS.DELETE_ROOM(`${clickedRoom.roomId}`)
+        );
+        toast.success(response.data.message ||"Room deleted successfully");
+        getRooms(activePage);
+      } catch (err) {
+        const error = err as AxiosError<{ message: string }>;
+        toast.error(error.response?.data?.message || t("Something went wrong"));
+      }
+      setDeleteDialogOpen(false);
+      handleClose();
+    };
+
+  const [clickedRoom, setClickedRoom] = useState<{ anchorEl: HTMLElement | null, roomId: string | null }>({
+  anchorEl: null,
+  roomId: null,
+});
+  const handleClick = (event: React.MouseEvent<HTMLElement>, roomId: string) => {
+  setClickedRoom({ anchorEl: event.currentTarget, roomId });
+};
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+  setClickedRoom({ anchorEl: null, roomId: null });
+};
+
+const open = Boolean(clickedRoom.anchorEl);
 
   useEffect(() => {
     getRooms(activePage);
@@ -77,6 +101,8 @@ export default function RoomsList() {
 
   return (
     <>
+      <RoomsHeader />
+
       <TableContainer
         sx={{
           borderTopLeftRadius: "8px",
@@ -147,6 +173,12 @@ export default function RoomsList() {
                       height="60px"
                       borderRadius="10%"
                       overflow={"hidden"}
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
                     >
                       <img
                         src={room.images[0] ? room.images[0] : noImg}
@@ -182,7 +214,7 @@ export default function RoomsList() {
                       aria-controls={open ? "basic-menu" : undefined}
                       aria-haspopup="true"
                       aria-expanded={open ? "true" : undefined}
-                      onClick={handleClick}
+                      onClick={(e) => handleClick(e, room._id)}
                       sx={{
                         color: "black",
                         bgcolor: "transparent",
@@ -194,8 +226,9 @@ export default function RoomsList() {
                       <MoreHorizIcon />
                     </Button>
                     <Menu
+                      className="actionMenu"
                       id="basic-menu"
-                      anchorEl={anchorEl}
+                      anchorEl={clickedRoom.anchorEl}
                       open={open}
                       onClose={handleClose}
                       slotProps={{
@@ -205,34 +238,36 @@ export default function RoomsList() {
                       }}
                       sx={{}}
                     >
-                      <MenuItem onClick={handleClose}>
+                      <MenuItem onClick={()=>navigate(`/dashboard/view-room/${clickedRoom.roomId}`)}>
                         <RemoveRedEyeIcon
                           sx={{
                             color: "#203FC7",
                             fontSize: "22px",
                             marginX: "10px",
+                            marginY: "5px",
                           }}
-                        />{" "}
+                        />
                         {t("list_actions.view")}
                       </MenuItem>
-                      <MenuItem onClick={handleClose}>
+                      <MenuItem onClick={()=>navigate(`/dashboard/edit-room/${clickedRoom.roomId}`)}>
                         <BorderColorIcon
                           sx={{
                             color: "#203FC7",
                             fontSize: "22px",
                             marginX: "10px",
                           }}
-                        />{" "}
+                        />
                         {t("list_actions.edit")}
                       </MenuItem>
-                      <MenuItem onClick={handleClose}>
+                      <MenuItem onClick={() => setDeleteDialogOpen(true)}>
                         <DeleteOutlineIcon
                           sx={{
                             color: "#203FC7",
                             fontSize: "22px",
                             marginX: "10px",
+                            marginY: "5px",
                           }}
-                        />{" "}
+                        />
                         {t("list_actions.delete")}
                       </MenuItem>
                     </Menu>
@@ -250,7 +285,7 @@ export default function RoomsList() {
                       count={totalPages}
                       onChange={(event, value) => {
                         setActivePage(value);
-                        getRooms(value); 
+                        getRooms(value);
                       }}
                       renderItem={(item) => (
                         <PaginationItem
@@ -269,6 +304,14 @@ export default function RoomsList() {
           </TableFooter>
         </Table>
       </TableContainer>
+
+
+      {/* Delete Confirmation Dialog */}
+            <DeleteConfirmation
+              open={deleteDialogOpen}
+              onClose={() => setDeleteDialogOpen(false)}
+              onConfirm={handleDelete}
+            />
     </>
   );
 }

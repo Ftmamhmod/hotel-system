@@ -60,15 +60,50 @@
       "createdAt": "Created At"
     }
   },
+  "ADS": {
+    "add_new_ADS": "Add New ADS",
+    "ADS_table_details": "ADS Table Details",
+    "check_all_details": "You can check all details",
+    "ADS_table_head": {
+      "room_number": "Room Number",
+      "price": "Price",
+      "discount": "Discount",
+      "capacity": "Capacity",
+      "status": "Status",
+      "date": "Date",
+      "updatedAt": "Updated At",
+      "createdAt": "Created At"
+    }
+  },
 
   "list_actions": {
     "view": "View",
     "edit": "Edit",
     "delete": "Delete"
   },
-  "SideBar": {
-    "Home": "Home",
-    "Users": "Users"
+"User":{
+  "User Table Details":" User Table Details ",
+  "You can check all details": "You can check all details",
+    "Users_table_head": {
+    "userName": "UserName",
+    "image": "Image",
+    "email": "Email",
+    "role": "Role",
+    "phoneNumber": "PhoneNumber"
+  }
+},
+   "Sidebar": {
+    "home": "Home",
+    "users": "Users",
+    "rooms": "Rooms",
+    "ads": "Ads",
+    "booking": "Booking",
+    "facilities": "Facilities",
+    "changePassword": "Change password",
+    "logout": "Logout"
+  },
+   "Navbar": {
+    "profile": " profile"
   },
   "forgot_title": "Forgot password",
   "forgot_subtitle": "If you already have an account register",

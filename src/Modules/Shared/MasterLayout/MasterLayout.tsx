@@ -1,17 +1,16 @@
 import { Outlet } from "react-router-dom";
 import MasterNavbar from "../MasterNavbar/MasterNavbar";
 import MasterFooter from "../MasterFooter/MasterFooter";
-import MasterAnonymousNavbar from "../MasterAnonymousNavbar/MasterAnonymousNavbar";
+import { Box } from "@mui/material";
 
 export default function MasterLayout() {
   return (
     <>
-      {localStorage.getItem("token") ? (
-        <MasterNavbar />
-      ) : (
-        <MasterAnonymousNavbar />
-      )}
-      <Outlet />
+      <MasterNavbar />
+      <Box px={{ xs: 2, sm: 4, md: 8, lg: 20 }} py={6}>
+        <Outlet />
+      </Box>
+
       <MasterFooter />
     </>
   );

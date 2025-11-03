@@ -12,7 +12,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import type { AxiosError } from "axios";
-import type { IFacilities } from "../../../../Services/INTERFACES";
+import type { IFacilities } from "../../../../Services/INTERFACE";
 import loading from "./../../../../Images/loading.gif";
 import TableFooter from "@mui/material/TableFooter";
 import Stack from "@mui/material/Stack";
@@ -27,10 +27,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteConfirmation from "./../../../Shared/DeleteConfirmation/DeleteConfirmation";
 import EditAddPopUp from "./EditAddPopUp";
+import FacilitiesHeader from "./FacilitiesHeader";
 export default function FacilitiesList() {
   const { t } = useTranslation();
   const tableCols = [
-    t("facilities.facilities_table_head.id"),
     t("facilities.facilities_table_head.name"),
     t("facilities.facilities_table_head.createdAt"),
     t("facilities.facilities_table_head.createdBy"),
@@ -44,11 +44,10 @@ export default function FacilitiesList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedFacility, setSelectedFacility] = useState<IFacilities | null>(
-    null
-  );
+  const [selectedFacility, setSelectedFacility] = useState<
+    IFacilities | string
+  >();
   const [editAddPopUpOpen, setEditAddPopUpOpen] = useState(false);
-  console.log(editAddPopUpOpen);
   const handleMenuClick = (
     event: React.MouseEvent<HTMLElement | SVGSVGElement>,
     facility: IFacilities
@@ -59,15 +58,17 @@ export default function FacilitiesList() {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-    setSelectedFacility(null);
+    setSelectedFacility(undefined as unknown as IFacilities | string);
   };
   const handleDelete = async () => {
     try {
-      await axiosInstance.delete(
-        `${FACILITIES_URLS.DELETE_FACILITY}${selectedFacility?._id}`
-      );
+      if (typeof selectedFacility === "object" && selectedFacility?._id) {
+        await axiosInstance.delete(
+          FACILITIES_URLS.DELETE_FACILITY(selectedFacility._id)
+        );
+      }
       toast.success(t("Facility deleted successfully"));
-      getFacilities({ page: currentPage });
+      getFacilities();
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
       toast.error(error.response?.data?.message || t("Something went wrong"));
@@ -75,10 +76,10 @@ export default function FacilitiesList() {
     setDeleteDialogOpen(false);
     handleMenuClose();
   };
-  const getFacilities = async ({ page }: { page: number }) => {
+  const getFacilities = async () => {
     try {
       setIsLoading(true);
-      const response = await axiosInstance(FACILITIES_URLS.GET_ALL(page));
+      const response = await axiosInstance(FACILITIES_URLS.GET_ALL);
       setFacilities(response?.data?.data?.facilities);
       setTotalPages(Math.ceil(response?.data?.data?.totalCount / 10));
     } catch (err) {
@@ -89,11 +90,12 @@ export default function FacilitiesList() {
   };
 
   useEffect(() => {
-    getFacilities({ page: currentPage });
+    getFacilities();
   }, [currentPage]);
 
   return (
     <>
+      <FacilitiesHeader getFacilities={getFacilities} />
       <TableContainer
         sx={{
           borderTopLeftRadius: "8px",
@@ -148,12 +150,6 @@ export default function FacilitiesList() {
                     align="center"
                     sx={{ paddingY: "10px", border: "none" }}
                   >
-                    {facility._id}
-                  </TableCell>
-                  <TableCell
-                    align="center"
-                    sx={{ paddingY: "10px", border: "none" }}
-                  >
                     {facility?.name}
                   </TableCell>
                   <TableCell
@@ -194,7 +190,7 @@ export default function FacilitiesList() {
                     page={currentPage}
                     onChange={(_, newPage) => {
                       setCurrentPage(newPage);
-                      getFacilities({ page: newPage });
+                      getFacilities();
                     }}
                     renderItem={(item) => (
                       <PaginationItem
@@ -227,11 +223,8 @@ export default function FacilitiesList() {
           horizontal: "right",
         }}
       >
-        <MenuItem>
-          <EditIcon
-            onClick={() => setEditAddPopUpOpen(true)}
-            sx={{ mr: 1, color: "#203FC7", fontSize: "medium" }}
-          />
+        <MenuItem onClick={() => setEditAddPopUpOpen(true)}>
+          <EditIcon sx={{ mr: 1, color: "#203FC7", fontSize: "medium" }} />
           {t("Edit")}
         </MenuItem>
         <MenuItem onClick={() => setDeleteDialogOpen(true)}>
@@ -241,12 +234,19 @@ export default function FacilitiesList() {
       </Menu>
       <EditAddPopUp
         open={editAddPopUpOpen}
-        handleClose={() => setEditAddPopUpOpen(false)}
-        refetchData={() => getFacilities({ page: currentPage })}
-        facilityData={selectedFacility}
+        handleClose={() => {
+          setEditAddPopUpOpen(false);
+          handleMenuClose();
+        }}
+        isEdit={Boolean(selectedFacility)}
+        refetchData={getFacilities}
+        facilityData={
+          typeof selectedFacility === "object" ? selectedFacility : null
+        }
       />
       {/* Delete Confirmation Dialog */}
       <DeleteConfirmation
+        handleClose={() => setDeleteDialogOpen(false)}
         open={deleteDialogOpen}
         onClose={() => setDeleteDialogOpen(false)}
         onConfirm={handleDelete}
